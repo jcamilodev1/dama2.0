@@ -8,7 +8,7 @@ module.exports = {
   entry: {
     main: [
       './modules/index.ts',
-      './src/styles/style.scss'
+      './src/sass/main.scss'
     ],
   },
   output: {
@@ -25,11 +25,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.tsx?$/,
+        use:  [ 'ts-loader'], // aca quede "sass-loader"   "style-loader", "css-loader"
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
       },
       {
         test: /\.css|.s[ac]ss$/i,
@@ -60,7 +58,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css'
+      filename: 'css/main.css'
     }),
     new CopyPlugin({ // CONFIGURACIÓN DEL COPY PLUGIN
       patterns: [

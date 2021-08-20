@@ -10,7 +10,7 @@ declare global {
 
 window.dama = window.dama || {};
 
-window.dama.info = 'Desarrollado en 150% por David Martinez'
+window.dama.info = 'Desarrollado en 150% por David Martinez, Manuel Castro, Carlos Espinel'
 
 window.dama.setDatalayer = (select: string, label: string) => {
     try {
