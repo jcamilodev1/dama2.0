@@ -18,7 +18,7 @@ require(`/src/ts/services/general.ts`).page()
 // require(`datalayers.ts`)
 // console.log( route.hasOwnProperty('page') ? 'has page' : 'has not page' )
 if(route){
-    route.hasOwnProperty('page') ? require(`/src/ts/pages/${route.page}.ts`).page() : require(`/src/ts/pages/${route.component}.ts`).component()
+    route.hasOwnProperty('page') ? require(`/src/ts/pages/${route.page}.tsx`).page() : require(`/src/ts/pages/${route.component}.tsx`).component()
 }else{
     routeDontFound()
 }

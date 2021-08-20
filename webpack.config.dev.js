@@ -19,7 +19,7 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.jsx','.tsx', '.ts', '.js'],
     modules: ['./modules', 'node_modules' ]
   },
   module: {
