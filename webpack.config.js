@@ -1,15 +1,10 @@
-const path = require('path'),
-MiniCssExtractPlugin = require('mini-css-extract-plugin'),
-BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-Autoprefixer = require('autoprefixer'),
-PostcssCustomProperties = require('postcss-custom-properties'),
-JavaScriptObfuscator = require('webpack-obfuscator'),
-CopyPlugin = require('copy-webpack-plugin'),
-CssMinimizerPlugin = require('css-minimizer-webpack-plugin'),
-TerserPlugin = require('terser-webpack-plugin'),
-{ CleanWebpackPlugin } = require('clean-webpack-plugin');
-
-const ofuscar = false;
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin"),
+postcssCustomProperties = require('postcss-custom-properties'),
+autoprefixer = require('autoprefixer'),
+BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
@@ -21,9 +16,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/main.js',
-    assetModuleFilename: 'assets/images/[hash][ext][query]'
+    // assetModuleFilename: 'assets/images/[hash][ext][query]'
   },
-  mode: 'production',
+  mode: 'development',
   devtool: 'source-map',
   resolve: {
     extensions: ['.jsx','.tsx', '.ts', '.js'],
@@ -38,26 +33,45 @@ module.exports = {
       },
       {
         test: /\.css|.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader,
-          'css-loader',
-          "sass-loader",
-        ],
+        use: [
+          'style-loader',
+          {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                  publicPath: '/dist/css/',
+                  esModule: false,
+              }
+          },
+          {
+              loader: 'css-loader',
+              options: {
+                  url: false,
+                  importLoaders: 1,
+                  sourceMap: true
+              }
+          },
+          {
+              loader: 'sass-loader',
+              options: {
+                  sourceMap: true
+              }
+          }
+        ]
       },
       {
         test: /\.png/ || /\.jpg/,
         type: "asset/resource"
       },
       {
-        //test: /\.(woff|woff2)$/, // REGLA PARA ARCHIVOS WOFF | WOFF2
         test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
         use: {
           loader: 'url-loader',
           options: {
-            limit: false, 
+            limit: 10000,
             mimetype: 'aplication/font-woff',
             name: "[name].[ext]",
-            outputPath: './fonts/',
-            publicPath: './fonts/',
+            outputPath: '../fonts/',
+            publicPath: '../fonts/',
             esModule: false
           }
         }
@@ -68,31 +82,13 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/main.css'
     }),
-    new CopyPlugin({ // CONFIGURACIÓN DEL COPY PLUGIN
-      patterns: [
-        {
-          from: path.resolve(__dirname, "src", 'assets/images'), // CARPETA A MOVER AL DIST
-          to: "assets/images" // RUTA FINAL DEL DIST
-        }
-      ]
-    }),
-    new CleanWebpackPlugin(),
+    //new BundleAnalyzerPlugin()
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3000,
       files: ['./dist/*.html', './dist/*.css', './dist/*.js'],
       server: { baseDir: ['dist'] }
     }),
-    new JavaScriptObfuscator ({
-      rotateUnicodeArray: ofuscar
-    })
   ],
   
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserPlugin()
-    ]
-  },
 }
