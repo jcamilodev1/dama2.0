@@ -1,8 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin"),
+postcssCustomProperties = require('postcss-custom-properties'),
+autoprefixer = require('autoprefixer'),
+BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
@@ -14,7 +16,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/main.js',
-    assetModuleFilename: 'assets/images/[hash][ext][query]'
+    // assetModuleFilename: 'assets/images/[hash][ext][query]'
   },
   mode: 'development',
   devtool: 'source-map',
@@ -31,10 +33,30 @@ module.exports = {
       },
       {
         test: /\.css|.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader,
-          'css-loader',
-          "sass-loader",
-        ],
+        use: [
+          'style-loader',
+          {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                  publicPath: '/dist/css/',
+                  esModule: false,
+              }
+          },
+          {
+              loader: 'css-loader',
+              options: {
+                  url: false,
+                  importLoaders: 1,
+                  sourceMap: true
+              }
+          },
+          {
+              loader: 'sass-loader',
+              options: {
+                  sourceMap: true
+              }
+          }
+        ]
       },
       {
         test: /\.png/ || /\.jpg/,
@@ -59,14 +81,6 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/main.css'
-    }),
-    new CopyPlugin({ // CONFIGURACIÓN DEL COPY PLUGIN
-      patterns: [
-        {
-          from: path.resolve(__dirname, "src", 'assets/images'), // CARPETA A MOVER AL DIST
-          to: "assets/images" // RUTA FINAL DEL DIST
-        }
-      ]
     }),
     //new BundleAnalyzerPlugin()
     new BrowserSyncPlugin({
