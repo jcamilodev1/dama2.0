@@ -19,6 +19,7 @@ require(`/src/ts/services/general.ts`).page()
 // console.log( route.hasOwnProperty('page') ? 'has page' : 'has not page' )
 if(route){
     route.hasOwnProperty('page') ? require(`/src/ts/pages/${route.page}.tsx`).page() : require(`/src/ts/pages/${route.component}.tsx`).component()
+    route.hasOwnProperty('page') ?? require(`/src/sass/pages/${route.page}.scss`).page()
 }else{
     routeDontFound()
 }
