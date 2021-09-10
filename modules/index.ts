@@ -1,6 +1,5 @@
 // IMPORT ROUTES 
 const { routes } = require(`/src/ts/config/routes.ts`)
-require(`/src/sass/main.scss`)
 
 let route: any = routes.find( (item: any) => {
 	const responseItem:boolean = Array.isArray(item.path) ?
