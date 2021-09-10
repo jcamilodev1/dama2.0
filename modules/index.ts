@@ -1,5 +1,6 @@
 // IMPORT ROUTES 
 const { routes } = require(`/src/ts/config/routes.ts`)
+require(`/src/sass/main.scss`)
 
 let route: any = routes.find( (item: any) => {
 	const responseItem:boolean = Array.isArray(item.path) ?
@@ -19,7 +20,7 @@ require(`/src/ts/services/general.ts`).page()
 // console.log( route.hasOwnProperty('page') ? 'has page' : 'has not page' )
 if(route){
     route.hasOwnProperty('page') ? require(`/src/ts/pages/${route.page}.tsx`).page() : require(`/src/ts/pages/${route.component}.tsx`).component()
-    route.hasOwnProperty('page') ?? require(`/src/sass/pages/${route.page}.scss`).page()
+    route.hasOwnProperty('page') ?? require(`/src/sass/pages/${route.page}.scss`)
 }else{
     routeDontFound()
 }

@@ -9,8 +9,8 @@ BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
   entry: {
     main: [
-      './modules/index.ts',
-      './src/sass/main.scss'
+      // './src/sass/main.scss',
+      './modules/index.ts'
     ],
   },
   output: {
