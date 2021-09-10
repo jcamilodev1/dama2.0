@@ -1481,6 +1481,9 @@ a[href^="tel"] {
 .noScroll {
   overflow: hidden; }
 
+h3 {
+  color: #8a7e7e; }
+
 /***************/
 /* MADE BY MC  */
 /***************/
