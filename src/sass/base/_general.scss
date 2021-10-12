@@ -1,5 +1,8 @@
 /** GENERAL **/
-
+html{
+	font-size: 62.5%; /* =10px */
+	scroll-behavior: smooth;
+}
 
 html, body, body *, *, *::before, *::after {
 	box-sizing: border-box;
@@ -52,4 +55,32 @@ iframe[sandbox] {
 a[href^="tel"] {
 	color: inherit;
 	text-decoration: none;
+}
+.title-color{
+	color: $primary-color
+}
+.text-color{
+	color:  $text-color
+}
+.text-oran{
+	color: $text-oran;
+}
+.gradient{
+	background: $gradient-color;
+}
+.border-orange{
+	border-color: $primary-color;
+}
+.border-gr{
+	border: 2px solid $primary-color
+}
+
+.font-art{
+	font-family: 'Arts';
+}
+.font-text{
+	font-family: 'Abolition';
+}
+.font-title{
+	font-family: 'DrukWideBold';
 }
